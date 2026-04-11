@@ -28,10 +28,16 @@ export default function EmployerLogin() {
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm<LoginFormValues>({
     resolver: zodResolver(loginSchema),
   });
+
+  const handleFill = (email: string, pass: string) => {
+    setValue('email', email);
+    setValue('password', pass);
+  };
 
   const onSubmit = (data: LoginFormValues) => {
     // Check against employer
@@ -139,13 +145,13 @@ export default function EmployerLogin() {
           <div className="mt-6 p-4 rounded-lg bg-blue-50 border border-blue-100 flex items-start gap-3">
             <AlertCircle className="w-4 h-4 text-blue-500 mt-0.5" />
             <div className="text-xs text-blue-700 grid grid-cols-2 gap-4 w-full">
-              <div>
-                <p className="font-bold mb-1">Employer:</p>
+              <div onClick={() => handleFill(MOCK_USERS.employer.email, MOCK_USERS.employer.password)} className="cursor-pointer hover:bg-blue-100 p-1.5 rounded transition-colors border border-transparent hover:border-blue-200">
+                <p className="font-bold mb-1 underline">Employer:</p>
                 <p>User: <span className="font-semibold">{MOCK_USERS.employer.email}</span></p>
                 <p>Pass: <span className="font-semibold">{MOCK_USERS.employer.password}</span></p>
               </div>
-              <div>
-                <p className="font-bold mb-1">Candidate:</p>
+              <div onClick={() => handleFill(MOCK_USERS.candidate.email, MOCK_USERS.candidate.password)} className="cursor-pointer hover:bg-blue-100 p-1.5 rounded transition-colors border border-transparent hover:border-blue-200">
+                <p className="font-bold mb-1 underline">Candidate:</p>
                 <p>User: <span className="font-semibold">{MOCK_USERS.candidate.email}</span></p>
                 <p>Pass: <span className="font-semibold">{MOCK_USERS.candidate.password}</span></p>
               </div>
